@@ -1,11 +1,11 @@
+import os
 import pytest
-from news.models import News
+import django
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'yanews.settings')
+django.setup()
 
 @pytest.fixture
 def news_item():
-    return News.objects.create(title='Заголовок новости', text='Тестовый текст')
-
-@pytest.fixture
-def author_client(author, client):
-    client.force_login(author)
-    return client
+    from news.models import News
+    return News.objects.create(title="Заголовок новости", text="Текст новости")
